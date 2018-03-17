@@ -1,0 +1,1 @@
+var BASE_URL="https://thestute.com/wp-json/wp/v2";
