@@ -20,8 +20,34 @@ class MainAppState extends State<MainApp> {
         appBar: new AppBar(
           title: new Text("The Stute"),
         ),
-        body: mainpage
-      )
+        drawer: new Drawer(
+          child: new Column(
+            children: <Widget>[
+              new DrawerHeader(child: null),
+              new ListTile(
+                title: new Text("Home"),
+                onTap: (){print("HI");},
+                leading: new Icon(Icons.home),
+              ),
+              new ListTile(
+                title: new Text("Subscriptions"),
+                onTap: (){print("HI");},
+                leading: new Icon(Icons.mail),
+              ),
+              new ListTile(
+                title: new Text("Settings"),
+                onTap: (){print("HI");},
+                leading: new Icon(Icons.settings),
+              ),
+            ],
+          ),
+        ),
+        body: mainpage,
+      ),
+      theme: new ThemeData(
+        primaryColor: Colors.white,
+        accentColor: Colors.black
+      ),
     );
   }
 }
