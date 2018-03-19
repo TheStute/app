@@ -26,17 +26,17 @@ class MainAppState extends State<MainApp> {
               new DrawerHeader(child: null),
               new ListTile(
                 title: new Text("Home"),
-                onTap: (){print("HI");},
+                onTap: (){print("HOME");},
                 leading: new Icon(Icons.home),
               ),
               new ListTile(
                 title: new Text("Subscriptions"),
-                onTap: (){print("HI");},
+                onTap: (){print("SUBS");},
                 leading: new Icon(Icons.mail),
               ),
               new ListTile(
                 title: new Text("Settings"),
-                onTap: (){print("HI");},
+                onTap: (){print("SETS");},
                 leading: new Icon(Icons.settings),
               ),
             ],
