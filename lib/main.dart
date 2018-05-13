@@ -12,7 +12,7 @@ class MainApp extends StatefulWidget {
 }
 
 class MainAppState extends State<MainApp> {
-  var mainpage = new homepage.Homepage();
+  Widget mainpage = new homepage.Homepage();
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -26,17 +26,32 @@ class MainAppState extends State<MainApp> {
               new DrawerHeader(child: null),
               new ListTile(
                 title: new Text("Home"),
-                onTap: (){print("HOME");},
+                onTap: (){
+                  print("HOME");
+                  this.setState((){
+                    mainpage = homepage.Homepage();
+                  });
+                  Navigator.pop(context);
+                },
                 leading: new Icon(Icons.home),
               ),
               new ListTile(
                 title: new Text("Subscriptions"),
-                onTap: (){print("SUBS");},
+                onTap: (){
+                  print("SUBS");
+                  Navigator.pop(context);
+                },
                 leading: new Icon(Icons.mail),
               ),
               new ListTile(
                 title: new Text("Settings"),
-                onTap: (){print("SETS");},
+                onTap: (){
+                  print("SETS");
+                  this.setState((){
+                    mainpage = setpage.Setpage();
+                  });
+                  Navigator.pop(context);
+                },
                 leading: new Icon(Icons.settings),
               ),
             ],
