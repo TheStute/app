@@ -17,7 +17,7 @@ class HomepageState extends State<Homepage> {
   int page = 1;
 
   Future<void> getData() async {
-    var stickyPost = null;
+    var stickyPost;
     if(page == 1)
       stickyPost = await http.get(
         Uri.encodeFull(cons.BASE_URL+"/posts?sticky=true&per_page=1"),
@@ -50,14 +50,17 @@ class HomepageState extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
+    ScrollController controller = ScrollController();
     return new Scaffold(
       floatingActionButton: new FloatingActionButton (
         onPressed: () {this.getData();},
         backgroundColor: Colors.grey,
         child: new Icon(Icons.add),
       ),
-      body: new ListView.builder(
-        itemCount: data == null ? 0 : data.length,
+      body: data == null ? new Center(child: new CircularProgressIndicator()) :
+      new ListView.builder(
+        itemCount: data.length,
+        controller: controller,
         itemBuilder: (BuildContext context, int index) {
           var title = cons.mildHtmlParse(data[index]['title']['rendered']);
           var excerpt = cons.mildHtmlParse(data[index]['excerpt']['rendered']);

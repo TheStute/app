@@ -4,7 +4,7 @@ import 'homepage.dart' as homepage;
 import 'subpage.dart' as subpage;
 import 'setpage.dart' as setpage;
 
-void main() => runApp(new MainApp());
+void main() => runApp(new MaterialApp(home: new MainApp()));
 
 class MainApp extends StatefulWidget {
   @override
@@ -31,7 +31,6 @@ class MainAppState extends State<MainApp> {
                   this.setState((){
                     mainpage = homepage.Homepage();
                   });
-                  Navigator.pop(context);
                 },
                 leading: new Icon(Icons.home),
               ),
@@ -39,7 +38,6 @@ class MainAppState extends State<MainApp> {
                 title: new Text("Subscriptions"),
                 onTap: (){
                   print("SUBS");
-                  Navigator.pop(context);
                 },
                 leading: new Icon(Icons.mail),
               ),
@@ -50,7 +48,6 @@ class MainAppState extends State<MainApp> {
                   this.setState((){
                     mainpage = setpage.Setpage();
                   });
-                  Navigator.pop(context);
                 },
                 leading: new Icon(Icons.settings),
               ),
