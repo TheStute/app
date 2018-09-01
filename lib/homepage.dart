@@ -34,9 +34,9 @@ class HomepageState extends State<Homepage> {
 
     this.setState(() {
       if(stickyPost != null) {
-        data = JSON.decode(stickyPost.body);
+        data = json.decode(stickyPost.body);
       }
-      data.addAll(JSON.decode(response.body));
+      data.addAll(json.decode(response.body));
       page++;
     });
 
@@ -46,6 +46,7 @@ class HomepageState extends State<Homepage> {
   @override
   void initState() {
     this.getData();
+    super.initState();
   }
 
   @override

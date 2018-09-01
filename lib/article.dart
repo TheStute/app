@@ -31,7 +31,7 @@ class ArticleState extends State<Article> {
       }
     );
     this.setState(() {
-      data = JSON.decode(response.body);
+      data = json.decode(response.body);
       title = data["title"]["rendered"];
     });
 
