@@ -3,8 +3,17 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_html_view/flutter_html_view.dart';
 
 import 'constants.dart' as cons;
+
+String formatDate(DateTime date) {
+  var formattedString = "";
+  List<String> months = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  formattedString = formattedString+months[date.month];
+  formattedString = formattedString+" "+date.day.toString()+", "+date.year.toString();
+  return formattedString;
+}
 
 class Article extends StatefulWidget {
   final String postID;
@@ -24,14 +33,24 @@ class ArticleState extends State<Article> {
   String title = "Loading...";
 
   Future<void> getData() async {
+    var headers = { "Accept": "applications/json" };
     var response = await http.get(
       Uri.encodeFull(cons.BASE_URL+"/posts/"+postID),
-      headers: {
-        "Accept": "application/json"
-      }
+      headers: headers
     );
+    var baseData = json.decode(response.body);
+    response = await http.get(
+      Uri.encodeFull(baseData["_links"]["author"][0]["href"].toString()),
+      headers: headers
+    );
+    baseData["author"] = json.decode(response.body)["name"];
+    response = await http.get(
+      Uri.encodeFull(baseData["_links"]["wp:featuredmedia"][0]["href"].toString()),
+      headers: headers
+    );
+    baseData["featured_media"] = json.decode(response.body)["guid"]["rendered"];
     this.setState(() {
-      data = json.decode(response.body);
+      data = baseData;
       title = data["title"]["rendered"];
     });
 
@@ -56,10 +75,10 @@ class ArticleState extends State<Article> {
           return new Column(
             children: data == null ? <Widget>[new Text("Loading...")] :
               <Widget>[
-                new Text(data["featured_media"].toString()),
+                FadeInImage.assetNetwork(placeholder: "assets/loading.gif", image: data["featured_media"].toString()),
                 new Text(data["author"].toString()),
-                new Text(DateTime.parse(data["date"]).toString()),
-                new Text(data["content"]["rendered"])
+                new Text(formatDate(DateTime.parse(data["date"]))),
+                new HtmlView(data: data["content"]["rendered"])
               ],
           );
         }
