@@ -9,5 +9,10 @@ String mildHtmlParse(String original) {
   replaceAll("&#8217;", "'").
   replaceAll("&#8230;", "...").
   replaceAll("&#8220;", '"').
-  replaceAll("&#8221;", '"');
+  replaceAll("&#8221;", '"').
+  replaceAll("&#8211;", '-').
+  replaceAll("<ul>", "").
+  replaceAll("</ul>", "").
+  replaceAll("<li>", "• ").
+  replaceAll("</li>", "");
 }
