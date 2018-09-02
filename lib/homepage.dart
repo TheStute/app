@@ -18,13 +18,21 @@ class HomepageState extends State<Homepage> {
 
   Future<void> getData() async {
     var stickyPost;
-    if(page == 1)
+    var stickyData;
+    if(page == 1) {
       stickyPost = await http.get(
-        Uri.encodeFull(cons.BASE_URL+"/posts?sticky=true&per_page=1"),
-        headers: {
-          "Accept": "application/json"
-        }
+          Uri.encodeFull(cons.BASE_URL + "/posts?sticky=true&per_page=1"),
+          headers: {
+            "Accept": "application/json"
+          }
       );
+      stickyData = json.decode(stickyPost.body);
+      var featuredPic = await http.get(
+          Uri.encodeFull(stickyData[0]["_links"]["wp:featuredmedia"][0]["href"].toString()),
+          headers: { "Accept": "application/json" }
+      );
+      stickyData[0]["featured_media"] = json.decode(featuredPic.body)["guid"]["rendered"];
+    }
     var response = await http.get(
       Uri.encodeFull(cons.BASE_URL+"/posts?per_page=20&sticky=false&page="+page.toString()),
       headers: {
@@ -34,7 +42,7 @@ class HomepageState extends State<Homepage> {
 
     this.setState(() {
       if(stickyPost != null) {
-        data = json.decode(stickyPost.body);
+        data = stickyData;
       }
       data.addAll(json.decode(response.body));
       page++;
@@ -68,12 +76,15 @@ class HomepageState extends State<Homepage> {
           if(index == 0){
             return new FlatButton (
               child: new Card(
-                child: new ListTile(
-                  title: new Text(title),
-                  subtitle: new Text(excerpt),
-                  leading: new Icon(Icons.featured_video),
-                )
-              ),
+                child: new Column(children:
+                <Widget>[
+                  new FadeInImage.assetNetwork(placeholder: "assets/loading.gif", image: data[0]["featured_media"]),
+                  new ListTile(
+                    title: new Text(title),
+                    subtitle: new Text(excerpt),
+                  )
+                ]
+              )),
               onPressed: (){Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new Article(data[index]['id'].toString())));},
             );
           }
