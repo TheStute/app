@@ -72,7 +72,7 @@ class HomepageState extends State<Homepage> {
         controller: controller,
         itemBuilder: (BuildContext context, int index) {
           var title = cons.mildHtmlParse(data[index]['title']['rendered']);
-          var excerpt = cons.mildHtmlParse(data[index]['excerpt']['rendered']);
+          var excerpt = cons.mildHtmlParse(data[index]['excerpt']['rendered']).trim();
           if(index == 0){
             return new FlatButton (
               child: new Card(
