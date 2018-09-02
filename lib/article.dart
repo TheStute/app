@@ -15,6 +15,9 @@ String formatDate(DateTime date) {
   return formattedString;
 }
 
+TextStyle authorStyle = new TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0, color: Colors.black, height: 1.2);
+TextStyle articleStyle = new TextStyle(fontSize: 18.0, color: Colors.black, height: 1.2, wordSpacing: 1.1);
+
 class Article extends StatefulWidget {
   final String postID;
 
@@ -76,9 +79,12 @@ class ArticleState extends State<Article> {
             children: data == null ? <Widget>[new Text("Loading...")] :
               <Widget>[
                 FadeInImage.assetNetwork(placeholder: "assets/loading.gif", image: data["featured_media"].toString()),
-                new Text(data["author"].toString()),
-                new Text(formatDate(DateTime.parse(data["date"]))),
-                new HtmlView(data: data["content"]["rendered"])
+                new Text(formatDate(DateTime.parse(data["date"])), style: authorStyle),
+                new Text("By: "+data["author"].toString(), style: authorStyle),
+                new DefaultTextStyle(
+                    style: articleStyle,
+                    child: new HtmlView(data: data["content"]["rendered"])
+                )
               ],
           );
         }
