@@ -76,8 +76,12 @@ class ArticleState extends State<Article> {
         itemCount: 1,
         itemBuilder: (BuildContext context, int index) {
           return new Column(
-            children: data == null ? <Widget>[new Text("Loading...")] :
-              <Widget>[
+            children: data == null ?
+              <Widget>[ //Data is null
+                new Center(child: new CircularProgressIndicator(), heightFactor: 2.0)
+              ]
+                :
+              <Widget>[ //Data isn't null
                 FadeInImage.assetNetwork(placeholder: "assets/loading.gif", image: data["featured_media"].toString()),
                 new Text(formatDate(DateTime.parse(data["date"])), style: authorStyle),
                 new Text("By: "+data["author"].toString(), style: authorStyle),
