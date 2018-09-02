@@ -85,7 +85,11 @@ class HomepageState extends State<Homepage> {
                   )
                 ]
               )),
-              onPressed: (){Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new Article(data[index]['id'].toString())));},
+              onPressed: (){Navigator.of(context).push(
+                new MaterialPageRoute(
+                  builder: (BuildContext context) => new Article(data[index]['id'].toString()))
+                );
+              },
             );
           }
           else{
@@ -96,7 +100,11 @@ class HomepageState extends State<Homepage> {
                   subtitle: new Text (excerpt),
                 )
               ),
-              onPressed: (){Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new Article(data[index]['id'].toString())));},
+              onPressed: (){Navigator.of(context).push(
+                new MaterialPageRoute(
+                  builder: (BuildContext context) => new Article(data[index]['id'].toString()))
+                );
+              },
             );
           }
         }
